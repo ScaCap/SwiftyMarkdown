@@ -1,3 +1,8 @@
+# Scalable Capital Changes
+
+- Fixes a bug with system fonts (as proposed in [this PR](https://github.com/SimonFairbairn/SwiftyMarkdown/pull/100))
+- Adds the ability to ignore dynamic type
+
 # SwiftyMarkdown 1.0
 
 SwiftyMarkdown converts Markdown files and strings into `NSAttributedString`s using sensible defaults and a Swift-style syntax. It uses dynamic type to set the font size correctly with whatever font you'd like to use.
