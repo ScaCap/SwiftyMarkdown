@@ -1,7 +1,9 @@
 # Scalable Capital Changes
 
 - Fixes a bug with system fonts (as proposed in [this PR](https://github.com/SimonFairbairn/SwiftyMarkdown/pull/100))
+  - Included also support for custom font weight
 - Adds the ability to ignore dynamic type
+- Adds support for custom link attribute
 
 # SwiftyMarkdown 1.0
 

@@ -249,6 +249,9 @@ If that is not set, then the system default will be used.
 	public var bullet : String = "・"
 	
 	public var underlineLinks : Bool = false
+    
+    /// The attribute that will store the url string for links
+    public var linkAttribute: NSAttributedString.Key = .link
 	
 	public var frontMatterAttributes : [String : String] {
 		get {
@@ -574,7 +577,7 @@ extension SwiftyMarkdown {
             if let linkIdx = styles.firstIndex(of: .link), linkIdx < token.metadataStrings.count {
                 attributes[.foregroundColor] = self.link.color
                 attributes[.font] = self.font(for: line, characterOverride: .link)
-                attributes[.link] = token.metadataStrings[linkIdx] as AnyObject
+                attributes[linkAttribute] = token.metadataStrings[linkIdx] as AnyObject
                 
                 if underlineLinks {
                     attributes[.underlineStyle] = self.link.underlineStyle.rawValue as AnyObject

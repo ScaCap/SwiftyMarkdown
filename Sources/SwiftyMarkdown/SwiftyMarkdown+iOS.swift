@@ -122,9 +122,11 @@ extension SwiftyMarkdown {
 			if existentFontName.hasPrefix(".SFUI") {
 				let fontMetrics = UIFontMetrics(forTextStyle: textStyle)
                 if ignoresDynamicSize {
-                    font = UIFont.systemFont(ofSize: finalSize)
+                    font = UIFont.systemFont(ofSize: finalSize, weight: fontWeightFromSystemFont(name: existentFontName))
+
                 } else {
-                    font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: finalSize))
+                    font = fontMetrics.scaledFont(for: UIFont.systemFont(ofSize: finalSize, weight: fontWeightFromSystemFont(name: existentFontName))
+)
                 }
 			} else if let customFont = UIFont(name: existentFontName, size: finalSize)  {
 				let fontMetrics = UIFontMetrics(forTextStyle: textStyle)
@@ -180,6 +182,22 @@ extension SwiftyMarkdown {
 			return link.color
 		}
 	}
+    
+    private func fontWeightFromSystemFont(name: String) -> UIFont.Weight {
+        switch name.split(separator: "-").last {
+        case "Black": return .black
+        case "Bold": return .bold
+        case "Heavy": return .heavy
+        case "Light": return .light
+        case "Medium": return .medium
+        case "Regular": return .regular
+        case "Semibold": return .semibold
+        case "Thin": return .thin
+        case "Ultralight": return .ultraLight
+        default:
+            return .regular
+        }
+    }
 	
 }
 #endif
