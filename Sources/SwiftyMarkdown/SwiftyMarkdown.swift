@@ -248,7 +248,9 @@ If that is not set, then the system default will be used.
 	
 	public var bullet : String = "・"
 	
-	public var underlineLinks : Bool = false
+    public var tabStopsInterval : CGFloat = 30
+
+    public var underlineLinks : Bool = false
     
     /// The attribute that will store the url string for links
     public var linkAttribute: NSAttributedString.Key = .link
@@ -511,7 +513,7 @@ extension SwiftyMarkdown {
 			attributes[.paragraphStyle] = paragraphStyle
 		case .unorderedList, .unorderedListIndentFirstOrder, .unorderedListIndentSecondOrder, .orderedList, .orderedListIndentFirstOrder, .orderedListIndentSecondOrder:
 			
-			let interval : CGFloat = 30
+			let interval : CGFloat = tabStopsInterval
 			var addition = interval
 			var indent = ""
 			switch line.lineStyle as! MarkdownLineStyle {
