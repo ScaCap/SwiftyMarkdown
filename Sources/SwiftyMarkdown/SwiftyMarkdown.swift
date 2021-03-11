@@ -248,7 +248,7 @@ If that is not set, then the system default will be used.
 	
 	public var bullet : String = "・"
 	
-    public var tabStopsInterval : CGFloat = 12
+    public var tabStopsInterval : CGFloat = 30
 
     public var underlineLinks : Bool = false
     
