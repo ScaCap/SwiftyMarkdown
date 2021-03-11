@@ -4,6 +4,7 @@
   - Included also support for custom font weight
 - Adds the ability to ignore dynamic type
 - Adds support for custom link attribute
+- Reduce tab stops, defaultTabInterval to 12 (and indirectly headIndent for lists)
 
 # SwiftyMarkdown 1.0
 
