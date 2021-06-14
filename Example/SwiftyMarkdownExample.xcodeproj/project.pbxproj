@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B5080AA82677218300CD1C2C /* SwiftyMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = B5080AA72677218300CD1C2C /* SwiftyMarkdown */; };
-		B5080AAA2677218700CD1C2C /* SwiftyMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = B5080AA92677218700CD1C2C /* SwiftyMarkdown */; };
-		B5080AAC2677219400CD1C2C /* SwiftyMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = B5080AAB2677219400CD1C2C /* SwiftyMarkdown */; };
-		B5080AAE2677219900CD1C2C /* SwiftyMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = B5080AAD2677219900CD1C2C /* SwiftyMarkdown */; };
+		B5841BEE2677C1EB005CC844 /* SwiftyMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = B5841BED2677C1EB005CC844 /* SwiftyMarkdown */; };
 		F4B4A44C23E4E17400550249 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B4A44B23E4E17400550249 /* AppDelegate.swift */; };
 		F4B4A44E23E4E17400550249 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B4A44D23E4E17400550249 /* ViewController.swift */; };
 		F4B4A45023E4E17400550249 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4B4A44F23E4E17400550249 /* Assets.xcassets */; };
@@ -65,7 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B5080AA22677212E00CD1C2C /* SwiftyMarkdown */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftyMarkdown; path = ..; sourceTree = "<group>"; };
+		B5841BEC2677C1E4005CC844 /* SwiftyMarkdown */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftyMarkdown; path = ..; sourceTree = "<group>"; };
 		F4576C2E2437F67B0013E2B6 /* example.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = example.md; sourceTree = "<group>"; };
 		F4B4A44923E4E17400550249 /* SwiftyMarkdownExample macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftyMarkdownExample macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B4A44B23E4E17400550249 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5080AA82677218300CD1C2C /* SwiftyMarkdown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5080AAA2677218700CD1C2C /* SwiftyMarkdown in Frameworks */,
+				B5841BEE2677C1EB005CC844 /* SwiftyMarkdown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +107,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5080AAE2677219900CD1C2C /* SwiftyMarkdown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +114,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5080AAC2677219400CD1C2C /* SwiftyMarkdown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +136,7 @@
 		F4B4A45923E4E18800550249 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B5080AA22677212E00CD1C2C /* SwiftyMarkdown */,
+				B5841BEC2677C1E4005CC844 /* SwiftyMarkdown */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -221,7 +215,6 @@
 			);
 			name = "SwiftyMarkdownExample macOS";
 			packageProductDependencies = (
-				B5080AA72677218300CD1C2C /* SwiftyMarkdown */,
 			);
 			productName = "SwiftyMarkdownExample macOS";
 			productReference = F4B4A44923E4E17400550249 /* SwiftyMarkdownExample macOS.app */;
@@ -242,7 +235,7 @@
 			);
 			name = SwiftyMarkdownExample;
 			packageProductDependencies = (
-				B5080AA92677218700CD1C2C /* SwiftyMarkdown */,
+				B5841BED2677C1EB005CC844 /* SwiftyMarkdown */,
 			);
 			productName = SwiftyMarkdownExample;
 			productReference = F4CE98A81C8AEF7D00D735C1 /* SwiftyMarkdownExample.app */;
@@ -263,7 +256,6 @@
 			);
 			name = SwiftyMarkdownExampleTests;
 			packageProductDependencies = (
-				B5080AAD2677219900CD1C2C /* SwiftyMarkdown */,
 			);
 			productName = SwiftyMarkdownExampleTests;
 			productReference = F4CE98BC1C8AEF7D00D735C1 /* SwiftyMarkdownExampleTests.xctest */;
@@ -284,7 +276,6 @@
 			);
 			name = SwiftyMarkdownExampleUITests;
 			packageProductDependencies = (
-				B5080AAB2677219400CD1C2C /* SwiftyMarkdown */,
 			);
 			productName = SwiftyMarkdownExampleUITests;
 			productReference = F4CE98C71C8AEF7D00D735C1 /* SwiftyMarkdownExampleUITests.xctest */;
@@ -785,19 +776,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B5080AA72677218300CD1C2C /* SwiftyMarkdown */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftyMarkdown;
-		};
-		B5080AA92677218700CD1C2C /* SwiftyMarkdown */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftyMarkdown;
-		};
-		B5080AAB2677219400CD1C2C /* SwiftyMarkdown */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftyMarkdown;
-		};
-		B5080AAD2677219900CD1C2C /* SwiftyMarkdown */ = {
+		B5841BED2677C1EB005CC844 /* SwiftyMarkdown */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftyMarkdown;
 		};

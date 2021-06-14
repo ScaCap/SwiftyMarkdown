@@ -600,13 +600,16 @@ If that is not set, then the system default will be used.
 			guard let styles = token.characterStyles as? [CharacterStyle] else {
 				continue
 			}
-			if styles.contains(.italic) {
-				attributes[.font] = self.font(for: line, characterOverride: .italic)
-				attributes[.foregroundColor] = self.italic.color
-			}
-			if styles.contains(.bold) {
+			
+			if styles.contains(.bold) && styles.contains(.italic) {
+				attributes[.font] = self.font(for: line, characterOverrides: [.bold, .italic])
+				attributes[.foregroundColor] = self.bold.color
+			} else if styles.contains(.bold) {
 				attributes[.font] = self.font(for: line, characterOverride: .bold)
 				attributes[.foregroundColor] = self.bold.color
+			} else if styles.contains(.italic) {
+				attributes[.font] = self.font(for: line, characterOverride: .italic)
+				attributes[.foregroundColor] = self.italic.color
 			}
 			
             if let linkIdx = styles.firstIndex(of: .link), linkIdx < token.metadataStrings.count {
