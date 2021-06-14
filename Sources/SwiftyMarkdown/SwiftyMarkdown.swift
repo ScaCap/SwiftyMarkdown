@@ -27,50 +27,50 @@ public enum CharacterStyle : CharacterStyling, Equatable {
 	case referencedLink
 	case referencedImage
 	case strikethrough
-    #if os(macOS)
-    case color(color: NSColor)
-    case font(font: NSFont)
-    #else
-    case color(color: UIColor)
-    case font(font: UIFont)
-    #endif
+	#if os(macOS)
+	case color(color: NSColor)
+	case font(font: NSFont)
+	#else
+	case color(color: UIColor)
+	case font(font: UIFont)
+	#endif
 	
 	public func isEqualTo(_ other: CharacterStyling) -> Bool {
 		guard let other = other as? CharacterStyle else {
 			return false
 		}
-        
-        return self == other
+		
+		return self == other
 	}
-    
-    public static func == (lhs: CharacterStyle, rhs: CharacterStyle) -> Bool {
-        switch (lhs, rhs) {
-        case (.color, .color):
-            return true
-        case (.font, .font):
-            return true
-        case (.none, .none):
-            return true
-        case (.bold, .bold):
-            return true
-        case (.italic, .italic):
-            return true
-        case (.code, .code):
-            return true
-        case (.link, .link):
-            return true
-        case (.image, .image):
-            return true
-        case (.referencedLink, .referencedLink):
-            return true
-        case (.referencedImage, .referencedImage):
-            return true
-        case (.strikethrough, .strikethrough):
-            return true
-        default:
-            return false
-        }
-    }
+	
+	public static func == (lhs: CharacterStyle, rhs: CharacterStyle) -> Bool {
+		switch (lhs, rhs) {
+		case (.color, .color):
+			return true
+		case (.font, .font):
+			return true
+		case (.none, .none):
+			return true
+		case (.bold, .bold):
+			return true
+		case (.italic, .italic):
+			return true
+		case (.code, .code):
+			return true
+		case (.link, .link):
+			return true
+		case (.image, .image):
+			return true
+		case (.referencedLink, .referencedLink):
+			return true
+		case (.referencedImage, .referencedImage):
+			return true
+		case (.strikethrough, .strikethrough):
+			return true
+		default:
+			return false
+		}
+	}
 }
 
 enum MarkdownLineStyle : LineStyling {
@@ -650,16 +650,16 @@ If that is not set, then the system default will be used.
 				attributes[.foregroundColor] = self.code.color
 				attributes[.font] = self.font(for: line, characterOverride: .code)
 			}
-            
-            if let color = styles.colorStyle {
-                attributes[.foregroundColor] = color
-            }
-            
-            if let font = styles.fontStyle {
-                attributes[.font] = font
-            } else {
-                // Switch back to previous font
-            }
+			
+			if let color = styles.colorStyle {
+				attributes[.foregroundColor] = color
+			}
+			
+			if let font = styles.fontStyle {
+				attributes[.font] = font
+			} else {
+				// Switch back to previous font
+			}
 			let str = NSAttributedString(string: token.outputString, attributes: attributes)
 			finalAttributedString.append(str)
 		}
