@@ -40,7 +40,11 @@ public enum CharacterStyle : CharacterStyling, Equatable {
 			return false
 		}
         
-        switch (self, other) {
+        return self == other
+	}
+    
+    public static func == (lhs: CharacterStyle, rhs: CharacterStyle) -> Bool {
+        switch (lhs, rhs) {
         case (.color, .color):
             return true
         case (.font, .font):
@@ -66,7 +70,7 @@ public enum CharacterStyle : CharacterStyling, Equatable {
         default:
             return false
         }
-	}
+    }
 }
 
 enum MarkdownLineStyle : LineStyling {
