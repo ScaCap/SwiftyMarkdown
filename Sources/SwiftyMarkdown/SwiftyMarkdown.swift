@@ -200,9 +200,6 @@ If that is not set, then the system default will be used.
 		LineRule(token: "- ",type : MarkdownLineStyle.unorderedList, removeFrom: .leading),
 		LineRule(token: "\t\t* ", type: MarkdownLineStyle.unorderedListIndentSecondOrder, removeFrom: .leading, shouldTrim: false),
 		LineRule(token: "\t* ", type: MarkdownLineStyle.unorderedListIndentFirstOrder, removeFrom: .leading, shouldTrim: false),
-		LineRule(token: "\t\t1. ", type: MarkdownLineStyle.orderedListIndentSecondOrder, removeFrom: .leading, shouldTrim: false),
-		LineRule(token: "\t1. ", type: MarkdownLineStyle.orderedListIndentFirstOrder, removeFrom: .leading, shouldTrim: false),
-		LineRule(token: "1. ",type : MarkdownLineStyle.orderedList, removeFrom: .leading),
 		LineRule(token: "* ",type : MarkdownLineStyle.unorderedList, removeFrom: .leading),
 		LineRule(token: "    ", type: MarkdownLineStyle.codeblock, removeFrom: .leading, shouldTrim: false),
 		LineRule(token: "\t", type: MarkdownLineStyle.codeblock, removeFrom: .leading, shouldTrim: false),
@@ -214,7 +211,17 @@ If that is not set, then the system default will be used.
 		LineRule(token: "## ",type : MarkdownLineStyle.h2, removeFrom: .both),
 		LineRule(token: "# ",type : MarkdownLineStyle.h1, removeFrom: .both)
 	]
-	
+
+    static public var orderedListRules: [LineRule] {
+        return (0...100).flatMap {
+            [
+                LineRule(token: "\($0). ", type: MarkdownLineStyle.orderedList, removeFrom: .leading),
+                LineRule(token: "\t\($0). ", type: MarkdownLineStyle.orderedList, removeFrom: .leading),
+                LineRule(token: "\t\t\($0). ", type: MarkdownLineStyle.orderedList, removeFrom: .leading)
+            ]
+        }
+    }
+
 	static public var characterRules = [
 		CharacterRule(primaryTag: CharacterRuleTag(tag: "![", type: .open), otherTags: [
 				CharacterRuleTag(tag: "]", type: .close),
@@ -242,7 +249,7 @@ If that is not set, then the system default will be used.
 		CharacterRule(primaryTag: CharacterRuleTag(tag: "_", type: .repeating), otherTags: [], styles: [1 : CharacterStyle.italic, 2 : CharacterStyle.bold], minTags:1 , maxTags:2)
 	]
 	
-	let lineProcessor = SwiftyLineProcessor(rules: SwiftyMarkdown.lineRules, defaultRule: MarkdownLineStyle.body, frontMatterRules: SwiftyMarkdown.frontMatterRules)
+    let lineProcessor = SwiftyLineProcessor(rules: SwiftyMarkdown.lineRules + SwiftyMarkdown.orderedListRules, defaultRule: MarkdownLineStyle.body, frontMatterRules: SwiftyMarkdown.frontMatterRules)
 	let tokeniser = SwiftyTokeniser(with: SwiftyMarkdown.characterRules)
 	
 	/// The styles to apply to any H1 headers found in the Markdown
@@ -514,6 +521,7 @@ If that is not set, then the system default will be used.
 			}
 			
 		default:
+            guard !line.line.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { break }
 			self.orderedListCount = 0
 			self.orderedListIndentFirstOrderCount = 0
 			self.orderedListIndentSecondOrderCount = 0
