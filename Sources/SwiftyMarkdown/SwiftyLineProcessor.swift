@@ -124,7 +124,14 @@ public class SwiftyLineProcessor {
 			if let hasToken = self.closeToken, unprocessed != hasToken {
 				return nil
 			}
-            element.token = element.token.replacingOccurrences(of: "\t", with: "    ")
+
+            if element.removeFrom == .leading {
+                let prefix = text.prefix(where: { $0 == " "})
+                if !prefix.isEmpty {
+                    element.token = element.token.replacingOccurrences(of: "\t", with: prefix)
+                }
+            }
+
 			if !text.contains(element.token) {
 				continue
 			}
@@ -246,4 +253,17 @@ public class SwiftyLineProcessor {
     
 }
 
+private extension String {
+    func prefix(where predicate: (Character) -> Bool) -> String {
+        var result = ""
+        for char in self {
+            if predicate(char) {
+                result.append(char)
+            } else {
+                break
+            }
+        }
+        return result
+    }
+}
 
