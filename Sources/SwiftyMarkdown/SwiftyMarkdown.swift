@@ -192,17 +192,17 @@ If that is not set, then the system default will be used.
 		FrontMatterRule(openTag: "---", closeTag: "---", keyValueSeparator: ":")
 	]
 	
-	static public var lineRules = [
+    static public var lineRules: [LineRule] = [
 		LineRule(token: "=", type: MarkdownLineStyle.previousH1, removeFrom: .entireLine, changeAppliesTo: .previous),
 		LineRule(token: "-", type: MarkdownLineStyle.previousH2, removeFrom: .entireLine, changeAppliesTo: .previous),
-		LineRule(token: "\t\t- ", type: MarkdownLineStyle.unorderedListIndentSecondOrder, removeFrom: .leading, shouldTrim: false),
-		LineRule(token: "\t- ", type: MarkdownLineStyle.unorderedListIndentFirstOrder, removeFrom: .leading, shouldTrim: false),
-		LineRule(token: "- ",type : MarkdownLineStyle.unorderedList, removeFrom: .leading),
+
+        LineRule(token: "\t\t- ", type: MarkdownLineStyle.unorderedListIndentSecondOrder, removeFrom: .leading, shouldTrim: false),
+        LineRule(token: "\t- ", type: MarkdownLineStyle.unorderedListIndentFirstOrder, removeFrom: .leading, shouldTrim: false),
+        LineRule(token: "- ",type : MarkdownLineStyle.unorderedList, removeFrom: .leading),
+
 		LineRule(token: "\t\t* ", type: MarkdownLineStyle.unorderedListIndentSecondOrder, removeFrom: .leading, shouldTrim: false),
 		LineRule(token: "\t* ", type: MarkdownLineStyle.unorderedListIndentFirstOrder, removeFrom: .leading, shouldTrim: false),
 		LineRule(token: "* ",type : MarkdownLineStyle.unorderedList, removeFrom: .leading),
-		LineRule(token: "    ", type: MarkdownLineStyle.codeblock, removeFrom: .leading, shouldTrim: false),
-		LineRule(token: "\t", type: MarkdownLineStyle.codeblock, removeFrom: .leading, shouldTrim: false),
 		LineRule(token: ">",type : MarkdownLineStyle.blockquote, removeFrom: .leading),
 		LineRule(token: "###### ",type : MarkdownLineStyle.h6, removeFrom: .both),
 		LineRule(token: "##### ",type : MarkdownLineStyle.h5, removeFrom: .both),
@@ -213,11 +213,11 @@ If that is not set, then the system default will be used.
 	]
 
     static public var orderedListRules: [LineRule] {
-        return (0...100).flatMap {
+        return (1...100).flatMap {
             [
-                LineRule(token: "\($0). ", type: MarkdownLineStyle.orderedList, removeFrom: .leading),
-                LineRule(token: "\t\($0). ", type: MarkdownLineStyle.orderedList, removeFrom: .leading),
-                LineRule(token: "\t\t\($0). ", type: MarkdownLineStyle.orderedList, removeFrom: .leading)
+                LineRule(token: "\t\t\($0). ", type: MarkdownLineStyle.orderedListIndentSecondOrder, removeFrom: .leading, shouldTrim: false),
+                LineRule(token: "\t\($0). ", type: MarkdownLineStyle.orderedListIndentFirstOrder, removeFrom: .leading, shouldTrim: false),
+                LineRule(token: "\($0). ", type: MarkdownLineStyle.orderedList, removeFrom: .leading)
             ]
         }
     }
@@ -293,6 +293,9 @@ If that is not set, then the system default will be used.
 	public var bullet : String = "・"
 	
     public var tabStopsInterval : CGFloat = 30
+
+    // The spacing between entries in an ordered or unordered list
+    public var listSpacing: CGFloat = 0
 
     public var underlineLinks : Bool = false
     
@@ -521,7 +524,6 @@ If that is not set, then the system default will be used.
 			}
 			
 		default:
-            guard !line.line.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { break }
 			self.orderedListCount = 0
 			self.orderedListIndentFirstOrderCount = 0
 			self.orderedListIndentSecondOrderCount = 0
@@ -555,15 +557,15 @@ If that is not set, then the system default will be used.
 		case .unorderedList, .unorderedListIndentFirstOrder, .unorderedListIndentSecondOrder, .orderedList, .orderedListIndentFirstOrder, .orderedListIndentSecondOrder:
 			
 			let interval : CGFloat = tabStopsInterval
-			var addition = interval
+			var addition = interval * 2
 			var indent = ""
 			switch line.lineStyle as! MarkdownLineStyle {
 			case .unorderedListIndentFirstOrder, .orderedListIndentFirstOrder:
-				addition = interval * 2
-				indent = "\t"
-			case .unorderedListIndentSecondOrder, .orderedListIndentSecondOrder:
-				addition = interval * 3
+				addition = interval * 4
 				indent = "\t\t"
+			case .unorderedListIndentSecondOrder, .orderedListIndentSecondOrder:
+				addition = interval * 6
+				indent = "\t\t\t"
 			default:
 				break
 			}
@@ -574,10 +576,12 @@ If that is not set, then the system default will be used.
 			paragraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: interval, options: [:]), NSTextTab(textAlignment: .left, location: interval, options: [:])]
 			paragraphStyle.defaultTabInterval = interval
 			paragraphStyle.headIndent = addition
+            paragraphStyle.firstLineHeadIndent = 0
+            paragraphStyle.paragraphSpacingBefore = listSpacing
 
 			attributes[.paragraphStyle] = paragraphStyle
-			finalTokens.insert(Token(type: .string, inputString: "\(indent)\(listItem)\t"), at: 0)
-			
+			finalTokens.insert(Token(type: .string, inputString: "\(indent)\(listItem) \t"), at: 0)
+
 		case .yaml:
 			lineProperties = body
 		case .previousH1:

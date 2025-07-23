@@ -54,7 +54,7 @@ public struct FrontMatterRule {
 }
 
 public struct LineRule {
-    let token : String
+    var token : String
     let removeFrom : Remove
     let type : LineStyling
     let shouldTrim : Bool
@@ -114,7 +114,7 @@ public class SwiftyLineProcessor {
         }
         let previousLines = lineRules.filter({ $0.changeAppliesTo == .previous })
 
-        for element in lineRules {
+        for var element in lineRules {
             guard element.token.count > 0 else {
                 continue
             }
@@ -124,7 +124,7 @@ public class SwiftyLineProcessor {
 			if let hasToken = self.closeToken, unprocessed != hasToken {
 				return nil
 			}
-            
+            element.token = element.token.replacingOccurrences(of: "\t", with: "    ")
 			if !text.contains(element.token) {
 				continue
 			}
