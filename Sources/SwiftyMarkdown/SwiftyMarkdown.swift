@@ -113,6 +113,14 @@ enum MarkdownLineStyle : LineStyling {
             return nil
         }
     }
+
+    var isListItem: Bool {
+        switch self {
+        case .unorderedListIndentFirstOrder, .unorderedListIndentSecondOrder, .orderedListIndentFirstOrder, .orderedListIndentSecondOrder:
+            return true
+        default: return false
+        }
+    }
 }
 
 @objc public enum FontStyle : Int {
@@ -565,7 +573,7 @@ If that is not set, then the system default will be used.
 				indent = "\t\t"
 			case .unorderedListIndentSecondOrder, .orderedListIndentSecondOrder:
 				addition = interval * 6
-				indent = "\t\t\t"
+				indent = "\t\t\t\t"
 			default:
 				break
 			}

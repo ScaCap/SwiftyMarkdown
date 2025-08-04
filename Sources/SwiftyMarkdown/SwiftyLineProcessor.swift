@@ -73,7 +73,8 @@ public class SwiftyLineProcessor {
     
 	public var processEmptyStrings : LineStyling?
 	public internal(set) var frontMatterAttributes : [String : String] = [:]
-	
+
+    var prefixToken: String? = nil
 	var closeToken : String? = nil
     let defaultType : LineStyling
     
@@ -128,7 +129,8 @@ public class SwiftyLineProcessor {
             if element.removeFrom == .leading {
                 let prefix = text.prefix(where: { $0 == " "})
                 if !prefix.isEmpty {
-                    element.token = element.token.replacingOccurrences(of: "\t", with: prefix)
+                    element.token = element.token.replacingOccurrences(of: "\t", with: prefixToken ?? prefix)
+                    self.prefixToken = prefix
                 }
             }
 
@@ -159,8 +161,11 @@ public class SwiftyLineProcessor {
 				return nil
 			}
 
-			
-			
+            // Reset prefix token, in case we are not in a first or second order list anymore
+            if let style = element.type as? MarkdownLineStyle, !style.isListItem {
+                prefixToken = nil
+            }
+
             output = (element.shouldTrim) ? output.trimmingCharacters(in: .whitespaces) : output
             return SwiftyLine(line: output, lineStyle: element.type)
             
