@@ -54,7 +54,7 @@ public struct FrontMatterRule {
 }
 
 public struct LineRule {
-    let token : String
+    var token : String
     let removeFrom : Remove
     let type : LineStyling
     let shouldTrim : Bool
@@ -73,7 +73,8 @@ public class SwiftyLineProcessor {
     
 	public var processEmptyStrings : LineStyling?
 	public internal(set) var frontMatterAttributes : [String : String] = [:]
-	
+
+    var prefixToken: String? = nil
 	var closeToken : String? = nil
     let defaultType : LineStyling
     
@@ -114,7 +115,7 @@ public class SwiftyLineProcessor {
         }
         let previousLines = lineRules.filter({ $0.changeAppliesTo == .previous })
 
-        for element in lineRules {
+        for var element in lineRules {
             guard element.token.count > 0 else {
                 continue
             }
@@ -124,7 +125,15 @@ public class SwiftyLineProcessor {
 			if let hasToken = self.closeToken, unprocessed != hasToken {
 				return nil
 			}
-            
+
+            if element.removeFrom == .leading {
+                let prefix = text.prefix(where: { $0 == " "})
+                if !prefix.isEmpty {
+                    element.token = element.token.replacingOccurrences(of: "\t", with: prefixToken ?? prefix)
+                    self.prefixToken = prefix
+                }
+            }
+
 			if !text.contains(element.token) {
 				continue
 			}
@@ -152,8 +161,11 @@ public class SwiftyLineProcessor {
 				return nil
 			}
 
-			
-			
+            // Reset prefix token, in case we are not in a first or second order list anymore
+            if let style = element.type as? MarkdownLineStyle, !style.isListItem {
+                prefixToken = nil
+            }
+
             output = (element.shouldTrim) ? output.trimmingCharacters(in: .whitespaces) : output
             return SwiftyLine(line: output, lineStyle: element.type)
             
@@ -246,4 +258,17 @@ public class SwiftyLineProcessor {
     
 }
 
+private extension String {
+    func prefix(where predicate: (Character) -> Bool) -> String {
+        var result = ""
+        for char in self {
+            if predicate(char) {
+                result.append(char)
+            } else {
+                break
+            }
+        }
+        return result
+    }
+}
 
